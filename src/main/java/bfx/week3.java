@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
+import static java.lang.Math.log;
 import static java.util.Map.entry;
-import static java.lang.Math.*;
 
 class week3 {
 
@@ -84,6 +84,10 @@ class week3 {
     }
 
     static double[][] motifs2ProfileWithLaplace( List<String> motifs ) {
+        return motifs2ProfileWithLaplace(motifs,-1);
+    }
+
+    static double[][] motifs2ProfileWithLaplace( List<String> motifs, int skip ) {
         int[][] count = countMotifs(motifs);
         for( int i = 0 ; i < count.length ; i++ ) {
             for( int j = 0 ; j < count[i].length ; j++ ) {
@@ -98,14 +102,19 @@ class week3 {
     }
 
     static int[][] countMotifs( List<String> motifs ) {
+        return countMotifs(motifs, -1);
+    }
+
+    static int[][] countMotifs( List<String> motifs, int skip ) {
         int length = motifs.get(0).length();
         int[][] count = new int[4][length];
-        motifs.forEach(m->{
-            for( int i = 0 ; i < m.length() ; i++ ) {
-                int index = Nucleobase.valueOf(Character.toString(m.charAt(i))).getIndex();
-                count[index][i]++;
-            }
-        });
+        IntStream.range(0, motifs.size()).filter(i -> i != skip).mapToObj(motifs::get)
+                .forEach(m -> {
+                    for (int i = 0; i < m.length(); i++) {
+                        int index = Nucleobase.valueOf(Character.toString(m.charAt(i))).getIndex();
+                        count[index][i]++;
+                    }
+                });
         return count;
     }
 
