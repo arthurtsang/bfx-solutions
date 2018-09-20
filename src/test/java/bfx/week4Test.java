@@ -38,4 +38,11 @@ public class week4Test {
         String consensus = profile2Consensus(motifs2Profile(motifs));
         System.out.println( consensus );
     }
+
+    @Test
+    public void testWk5() throws Exception {
+        List<String> motifs = new BufferedReader( new InputStreamReader( this.getClass().getClassLoader().getResourceAsStream("input.txt"))).lines().collect(Collectors.toList());
+        System.out.println( profile2Consensus(motifs2Profile(motifs)) );
+
+    }
 }
