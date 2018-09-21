@@ -1,6 +1,7 @@
 package bfx2;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -107,4 +108,35 @@ class Week2 {
         }
         return sb.toString();
     }
+
+    static Stream<String> getAllBinaryCombination(int k) {
+        return IntStream.range(0,(int)Math.pow(2.0,(double)k)).mapToObj(Integer::toBinaryString).map(s->String.format("%"+k+"s",s).replace(' ', '0'));
+    }
+
+    static class PairedComposition implements Comparable{
+        String pattern1, pattern2;
+        PairedComposition(String p1, String p2) {
+            pattern1 = p1;
+            pattern2 = p2;
+        }
+        @Override
+        public String toString() {
+            return String.format("(%s|%s)", pattern1, pattern2);
+        }
+
+        @Override
+        public int compareTo(Object o) {
+            PairedComposition p = (PairedComposition)o;
+            if( p.pattern1.equals(this.pattern1) ) {
+                return this.pattern2.compareTo(p.pattern2);
+            }
+            return this.pattern1.compareTo(p.pattern1);
+        }
+    }
+
+    static List<PairedComposition> getParedComposition(String text, int k, int d ) {
+        final List<String> kmer = IntStream.range(0,text.length()-k+1).mapToObj(i->text.substring(i,i+k)).collect(Collectors.toList());
+        return IntStream.range(0,text.length()-2*k-d+1).mapToObj(i->new PairedComposition(kmer.get(i), kmer.get(i + k + d))).collect(Collectors.toList());
+    }
+
 }
