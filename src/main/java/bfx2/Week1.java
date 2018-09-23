@@ -30,6 +30,7 @@ public class Week1 {
             return this.text + " -> " + String.join(",", this.next);
         }
     }
+
     static List<Node> overlayGraph(Stream<String> texts) {
         List<Node> nodes = texts.map(Node::new).collect(Collectors.toList());
         IntStream.range(0,nodes.size()).forEach(i->{
