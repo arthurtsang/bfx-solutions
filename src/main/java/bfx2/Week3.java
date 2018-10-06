@@ -40,6 +40,8 @@ public class Week3 {
         return foundPeptide;
     }
 
+
+
     static Set<List<Integer>> expandPeptides(Set<List<Integer>> peptides) {
         if( integerMassTable == null ) integerMassTable = loadIntegerMass();
         if( uniqueIntegerMassList == null ) uniqueIntegerMassList = integerMassTable.values().stream().distinct().sorted().collect(Collectors.toList());
