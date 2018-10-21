@@ -1,3 +1,5 @@
+package bfx;
+
 import java.util.*;
 import java.io.*;
 
@@ -18,9 +20,9 @@ public class Clump {
         HashMap<String, List<Integer>> map = new HashMap<>();
         for (int i = 0; i <= dna.length() - k; i++) {
             String pattern = dna.substring(i, i + k);
-            List<Integer> positions = (map.containsKey(pattern)) ? map.get(pattern) : new ArrayList<>();
+            List<Integer> positions = map.getOrDefault(pattern, new ArrayList<>());
             positions.add(i);
-            map.put(pattern, positions);
+            map.putIfAbsent(pattern, positions);
         }
 
         List<String> kmers = map.entrySet().stream().filter(entry -> entry.getValue().size() >= t).map(Map.Entry::getKey).collect(toList());
